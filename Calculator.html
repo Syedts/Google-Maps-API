@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+     <script src="Calculator.js"></script>
+    <title>Mortgage Calculator</title>
+</head>
+<body>
+          
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Hamilton Homes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarNav" aria-controls="navbarNav" 
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="Home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Map.html">Map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Calculator.html">Calculator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Realtors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <h1 style="color: rgba(9, 152, 235, 0.836); text-align: center;"> Mortgage Calculator</h2>
+      <form id="mortgageForm">
+        <div class="mb-3">
+            <label for="principleAmount" class="form-label">Mortgage Amount</label>
+            <input type="text" class="form-control" id="principleAmount">
+        </div>
+        <div class="mb-3">
+            <label for="interestRate" class="form-label">Interest Rate</label>
+            <input type="text" class="form-control" id="interestRate">
+        </div>
+        <div class="mb-3">
+            <label for="loanLength" class="form-label">Loan Length (Years)</label>
+            <input type="text" class="form-control" id="loanLength">
+        </div>
+        <div class="mb-3">
+          
+            <label for="postalCode" class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="postalCode">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="validateForm()">Calculate</button>
+        <button type="reset" class="btn btn-secondary" onclick="refreshPage()">Reset</button>
+    </form>
+  </br>
+    <div id="validationAlert" class="alert d-none"></div>
+  </br>
+  <div class="card" style="width: 18rem; text-align: center;"> 
+    <div id="monthlyPayment" class="card-body">
+     
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

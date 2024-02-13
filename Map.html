@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="Map.js"></script>
+    <script src="config.js"></script>
+    
+    <script>
+    const apiKey = googleAPi.googleMapsApiKey ;
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap&v=weekly`;
+    script.async = true;
+    document.head.appendChild(script);
+    </script>
+   
+
+
+</head>
+<style>
+    #map {
+      height: 600px;
+      width: 1000px;
+    }
+    button {
+      font-size: 32px;
+    }
+  </style>
+<body>
+  <div id="alert"></div>
+    <div id="map"></div>
+    
+    
+
+    <div class="btn-group my-4" role="group" aria-label="Map Functions">
+      <button type="button" class="btn btn-primary" id="geolocate">Geolocate</button>
+      <button type="button" class="btn btn-primary" id="hospitals">Hospitals</button>
+      <button type="button" class="btn btn-primary" id="fireStations">Fire Stations</button>
+      <button type="button" class="btn btn-primary" id="schools">Schools</button>
+      <button type="button" class="btn btn-primary" id="waterfalls">Waterfalls</button>
+      <button type="button" class="btn btn-primary" id="clear">Clear</button>
+  </div>
+</body>
+ 
+  <script>
+   
+     let currentMarkers = [];
+
+function clearMarkers() 
+{
+for (let marker of currentMarkers) 
+  {
+    marker.setMap(null);
+  }
+  currentMarkers = []; // Reset the array
+}
+    function initMap()
+    {
+     
+
+      map = new google.maps.Map(document.getElementById("map"), 
+                                {
+                                center: { lat: 43.2516587, lng: -79.8318171},
+                                zoom: 9,
+                                });
+
+      
+    }
+    $("#geolocate").click( function(){ navigator.geolocation.getCurrentPosition(createUserMarker, error);});
+
+
+
+      function createUserMarker(pos)
+      {
+        
+        var lat = parseFloat(pos.coords.latitude);
+        var lng = parseFloat(pos.coords.longitude);
+  
+          geolocate_marker = new google.maps.Marker
+          ({
+          position: { lat: lat, lng: lng},
+          map: map,
+          icon:"Home.png"
+          
+         });
+         const infoWindow = new google.maps.InfoWindow({
+            content: "Current Location"
+          });
+
+
+          geolocate_marker.addListener('click', function() {
+            infoWindow.open(map, geolocate_marker);
+          });
+        
+
+
+      }
+      function error()
+      {
+        $('#alert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">"Error Getting Location"<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" ></button></div>`);
+
+        setTimeout(function() {
+          $('#alert').html("");
+            }, 5000);
+      }
+   
+      $("#hospitals").click( function()
+      { 
+        clearMarkers();
+        for (let i = 0; i < hospitals.features.length; i++)
+        {
+            
+            hospital_marker = new google.maps.Marker
+          ({
+            position: {lat: hospitals.features[i].geometry.coordinates[1],
+                      lng: hospitals.features[i].geometry.coordinates[0] },
+          title: hospitals.features[i].properties.NAME,
+          map: map,
+          icon: "hospital.png"
+         });
+         
+         currentMarkers.push(hospital_marker);
+        }
+
+        
+
+      });
+
+      $("#fireStations").click( function()
+      { 
+        clearMarkers();
+        for (let i = 0; i < fireStations.features.length; i++)
+        {
+          fireStations_marker = new google.maps.Marker
+          ({
+            position: {lat: fireStations.features[i].geometry.coordinates[1],
+                      lng: fireStations.features[i].geometry.coordinates[0] },
+          title: fireStations.features[i].properties.NAME,
+          map: map, 
+          icon: "firemen.png" });
+         currentMarkers.push(fireStations_marker );
+
+        }
+        
+
+      });
+    
+      $("#schools").click( function()
+      { 
+        clearMarkers();
+        for (let i = 0; i < schools.features.length; i++)
+        {
+          schools_marker = new google.maps.Marker
+          ({
+            position: {lat: schools.features[i].geometry.coordinates[1],
+                      lng: schools.features[i].geometry.coordinates[0] },
+          title: schools.features[i].properties.NAME,
+          map: map,
+          icon: "school.png"          
+         });
+         currentMarkers.push(schools_marker );
+
+        }
+        
+
+      });
+
+      $("#waterfalls").click( function()
+      { 
+        clearMarkers();
+        for (let i = 0; i < waterfalls.features.length; i++)
+        {
+          waterfalls_marker = new google.maps.Marker
+          ({
+            position: {lat: waterfalls.features[i].geometry.coordinates[1],
+                      lng: waterfalls.features[i].geometry.coordinates[0] },
+          title: waterfalls.features[i].properties.NAME,
+          map: map,
+          icon:"waterfall.png"          
+         });
+         currentMarkers.push(waterfalls_marker );
+
+        }
+        
+
+      });
+
+      $("#clear").click( function()
+      { 
+        clearMarkers();
+     
+      });
+  </script>
+ 
+  
+    
+</html>
